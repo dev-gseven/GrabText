@@ -1,11 +1,14 @@
 #ifndef NETWORKMANAGER_H
 #define NETWORKMANAGER_H
 
+#include "language.h"
+
 #include <QObject>
 #include <QString>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QCoreApplication>
 #include <QFile>
 
 class NetworkManager : public QObject
@@ -29,9 +32,9 @@ private slots:
 private:
 //    void onDownloadFinished(QNetworkReply *reply);
     QNetworkAccessManager qNetManager;
-    QString currentLanguage;
     QNetworkReply *currentReply = nullptr;
     QFile currentFile;
+    Language m_language;
 };
 
 #endif // NETWORKMANAGER_H

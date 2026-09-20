@@ -12,13 +12,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Widgets Network)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network)
 
-if(APPLE)
-    find_package(PkgConfig REQUIRED)
-
-    pkg_check_modules(TESSERACT REQUIRED tesseract)
-#    pkg_check_modules(LEPTONICA REQUIRED lept)
-
-endif()
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(TESSERACT REQUIRED tesseract)
 
 set(PROJECT_SOURCES
             src/main.cpp
@@ -92,13 +87,21 @@ if(QT_VERSION_MAJOR EQUAL 6)
 endif()
 
 if(APPLE)
-add_custom_command(TARGET GrabText POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory
-        "$<TARGET_BUNDLE_DIR:GrabText>/Contents/Resources/languages"
+    add_custom_command(TARGET GrabText POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory
+            "$<TARGET_BUNDLE_DIR:GrabText>/Contents/Resources/languages"
 
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${CMAKE_SOURCE_DIR}/languages"
-        "$<TARGET_BUNDLE_DIR:GrabText>/Contents/Resources/languages"
-)
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${CMAKE_SOURCE_DIR}/languages"
+            "$<TARGET_BUNDLE_DIR:GrabText>/Contents/Resources/languages"
+    )
+else()
+    add_custom_command(TARGET GrabText POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory
+            "$<TARGET_FILE_DIR:GrabText>/languages"
 
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${CMAKE_SOURCE_DIR}/languages"
+            "$<TARGET_FILE_DIR:GrabText>/languages"
+    )
 endif()

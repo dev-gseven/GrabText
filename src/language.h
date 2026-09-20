@@ -5,7 +5,6 @@
 #include <QVector>
 #include <QDirIterator>
 #include <QCoreApplication>
-#include <QDebug>
 
 class Language
 {

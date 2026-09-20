@@ -4,7 +4,6 @@ NetworkManager::NetworkManager(QObject *parent)
     : QObject{parent}, qNetManager(this)
 {
     connect(&qNetManager, &QNetworkAccessManager::finished, this, &NetworkManager::finished);
-//    connect(&qNetManager, &QNetworkAccessManager::finished, this, &NetworkManager::onDownloadFinished);
 }
 
 void NetworkManager::fetchLanguages(){
@@ -14,19 +13,13 @@ void NetworkManager::fetchLanguages(){
 
 void NetworkManager::downloadLanguage(const QString &url, const QString &language)
 {
-    currentLanguage = language;
 
-//    QString path = "../Resources/languages/" + language + ".traineddata";
-//    QString path = "/Users/felipemorais/Workspace/" + currentLanguage;
-    QString path = "../Resources/languages/" + currentLanguage;
+    QString path = m_language.getLanguagePath() + "/" + language;
 
     currentFile.setFileName(path);
 
     if (!currentFile.open(QIODevice::WriteOnly))
     {
-        qDebug() << "Erro ao abrir arquivo:"
-                 << currentFile.fileName();
-
         return;
     }
 
@@ -56,17 +49,10 @@ void NetworkManager::onDownloadFinished(){
 
     if (currentReply->error() == QNetworkReply::NoError)
     {
-        qDebug() << "Download concluído:"
-                 << currentFile.fileName();
-
         emit downloadFinished();
     }
     else
     {
-        qDebug() << "Erro no download:"
-                 << currentReply->errorString();
-
-        // Se houve erro, remove o arquivo incompleto.
         currentFile.remove();
     }
 

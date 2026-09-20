@@ -1,12 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "screenshotoverlay.h"
+#include "downloadwindow.h"
+
 #include <QMainWindow>
 #include <QComboBox>
 #include <QTimer>
-
-#include "screenshotoverlay.h"
-#include "downloadwindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

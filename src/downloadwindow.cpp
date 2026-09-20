@@ -59,6 +59,4 @@ void DownloadWindow::on_downloadButton_clicked(bool checked)
 {
     int row = ui->tableWidget->currentRow();
     netManager.downloadLanguage(downloadLinks[row],codenames[row]);
-    qDebug() << downloadLinks[row];
-    qDebug() << codenames[row];
 }

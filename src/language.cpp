@@ -8,7 +8,6 @@ Language::Language():currentIndex(0),
     languagePath (QCoreApplication::applicationDirPath() + "/languages")
 #endif
 
-
 {
 
 }
@@ -22,9 +21,6 @@ void Language::populateLangsVector(){
         dirIterator.next();
 
         langs.push_back(dirIterator.fileInfo().completeBaseName());
-    }
-    for (auto iterator : langs){
-        qDebug() << iterator;
     }
 }
 

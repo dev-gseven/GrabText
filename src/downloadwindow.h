@@ -1,9 +1,6 @@
 #ifndef DOWNLOADWINDOW_H
 #define DOWNLOADWINDOW_H
 
-#include <QWidget>
-#include <QDebug>
-
 #include "networkmanager.h"
 
 #include <QUrl>
@@ -14,6 +11,7 @@
 #include <QTableWidget>
 #include <QString>
 #include <QVector>
+#include <QWidget>
 
 namespace Ui {
 class DownloadWindow;

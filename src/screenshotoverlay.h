@@ -1,16 +1,18 @@
 #ifndef SCREENSHOTOVERLAY_H
 #define SCREENSHOTOVERLAY_H
 
-#include <QWidget>
-
-#include "ocr.h"
 #include "language.h"
 
-//#include <QPainter>
+#include <QWidget>
 #include <QClipboard>
 #include <tesseract/baseapi.h>
-
-#include <QDebug>
+#include <QApplication>
+#include <QGuiApplication>
+#include <QKeyEvent>
+#include <QMouseEvent>
+#include <QPainter>
+#include <QScreen>
+#include <QString>
 
 class ScreenshotOverlay : public QWidget
 {
@@ -37,8 +39,8 @@ private:
     QRect normalizedSelection() const;
     void copySelectionToClipboard();
 
-    Language &m_language;
-//    tesseract::TessBaseAPI tesseract;
+    Language &ref_language;
+    tesseract::TessBaseAPI tesseract;
 
 signals:
     void captureFinished();

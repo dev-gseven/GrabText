@@ -1,16 +1,7 @@
 #include "screenshotoverlay.h"
 
-#include <QApplication>
-#include <QClipboard>
-#include <QGuiApplication>
-#include <QKeyEvent>
-#include <QMouseEvent>
-#include <QPainter>
-#include <QScreen>
-#include <QString>
-
 ScreenshotOverlay::ScreenshotOverlay(Language &language, QWidget *parent)
-    : QWidget{parent}, m_screenshot(grabDesktop()), m_selecting(false),m_language(language)
+    : QWidget{parent}, m_screenshot(grabDesktop()), m_selecting(false),ref_language(language)
 {
     const QRect desktopGeometry = QGuiApplication::primaryScreen()->virtualGeometry();
 
@@ -87,11 +78,6 @@ void ScreenshotOverlay::paintEvent(QPaintEvent *event)
         painter.setPen(borderPen);
         painter.setBrush(Qt::NoBrush);
         painter.drawRect(selection.adjusted(0, 0, -1, -1));
-
-        painter.setPen(QColor(255, 255, 255));
-        painter.drawText(selection.adjusted(6, 6, -6, -6),
-                         Qt::AlignLeft | Qt::AlignTop,
-                         QStringLiteral("%1 x %2").arg(selection.width()).arg(selection.height()));
     }
 }
 
@@ -122,15 +108,13 @@ QRect ScreenshotOverlay::normalizedSelection() const
 
 void ScreenshotOverlay::copySelectionToClipboard()
 {
-    tesseract::TessBaseAPI tesseract;
-
     const QRect selection = normalizedSelection();
     if (selection.width() < 2 || selection.height() < 2) {
         return;
     }
 
     // initialize tesseract
-    if (tesseract.Init(m_language.getLanguagePath().toStdString().c_str(), m_language.getCurrentLang(m_language.getCurrentIndex()).toStdString().c_str())){
+    if (tesseract.Init(ref_language.getLanguagePath().toStdString().c_str(), ref_language.getCurrentLang(ref_language.getCurrentIndex()).toStdString().c_str())){
         return;
     }
 
