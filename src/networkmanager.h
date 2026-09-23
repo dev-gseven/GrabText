@@ -21,9 +21,10 @@ public:
     void downloadLanguage(const QString &url, const QString &language);
 
 signals:
-    void finished(QNetworkReply *reply);
+    void fetchFinished(QNetworkReply *reply);
 //    void downloadFinished(QNetworkReply *reply);
     void downloadFinished();
+    void downloadFailed();
 
 private slots:
     void onReadyRead();

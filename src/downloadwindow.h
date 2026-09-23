@@ -12,6 +12,7 @@
 #include <QString>
 #include <QVector>
 #include <QWidget>
+#include <QTimer>
 
 namespace Ui {
 class DownloadWindow;
@@ -33,8 +34,13 @@ private slots:
 private:
     QVector<QString> downloadLinks;
     QVector<QString> codenames;
+    QString persistentStatus;
+    QTimer statusTimer;
 
     void onReplyFinished(QNetworkReply *reply);
+    void onDownloadFinished();
+    void onDownloadFailed();
+    void showTemporaryStatus(const QString &temporaryText,const QString &persistentText);
 
     Ui::DownloadWindow *ui;
     NetworkManager netManager;

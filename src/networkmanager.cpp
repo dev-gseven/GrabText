@@ -3,7 +3,7 @@
 NetworkManager::NetworkManager(QObject *parent)
     : QObject{parent}, qNetManager(this)
 {
-    connect(&qNetManager, &QNetworkAccessManager::finished, this, &NetworkManager::finished);
+    connect(&qNetManager, &QNetworkAccessManager::finished, this, &NetworkManager::fetchFinished);
 }
 
 void NetworkManager::fetchLanguages(){
@@ -53,6 +53,7 @@ void NetworkManager::onDownloadFinished(){
     }
     else
     {
+        emit downloadFailed();
         currentFile.remove();
     }
 

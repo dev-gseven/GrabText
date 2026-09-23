@@ -7,7 +7,13 @@ DownloadWindow::DownloadWindow(QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
 
-    connect(&netManager, &NetworkManager::finished, this, &DownloadWindow::onReplyFinished);
+    connect(&netManager, &NetworkManager::fetchFinished, this, &DownloadWindow::onReplyFinished);
+    connect(&netManager, &NetworkManager::downloadFinished, this, &DownloadWindow::onDownloadFinished);
+    connect(&netManager, &NetworkManager::downloadFailed, this, &DownloadWindow::onDownloadFailed);
+
+    statusTimer.callOnTimeout(this, [this](){
+        ui->label->setText(persistentStatus);
+    });
 
     netManager.fetchLanguages();
 }
@@ -15,6 +21,14 @@ DownloadWindow::DownloadWindow(QWidget *parent) :
 DownloadWindow::~DownloadWindow()
 {
     delete ui;
+}
+
+void DownloadWindow::onDownloadFailed(){
+    showTemporaryStatus("Download failed!","");
+}
+
+void DownloadWindow::onDownloadFinished(){
+    showTemporaryStatus("Download finished!","");
 }
 
 void DownloadWindow::onReplyFinished(QNetworkReply *reply){
@@ -53,6 +67,14 @@ void DownloadWindow::onReplyFinished(QNetworkReply *reply){
         ui->tableWidget->setItem(newLine, 0, new QTableWidgetItem(filename));
         ui->tableWidget->setItem(newLine, 1, new QTableWidgetItem(QString("%1 MB").arg(sizeMB, 0, 'f', 1)));
     }
+}
+
+void DownloadWindow::showTemporaryStatus(const QString &temporaryText,const QString &persistentText){
+    ui->label->setText(temporaryText);
+
+    persistentStatus = persistentText;
+
+    statusTimer.start(3000);
 }
 
 void DownloadWindow::on_downloadButton_clicked(bool checked)
