@@ -28,6 +28,7 @@ void DownloadWindow::onDownloadFailed(){
 }
 
 void DownloadWindow::onDownloadFinished(){
+    emit downloadFinished();
     showTemporaryStatus("Download finished!","");
 }
 
@@ -59,8 +60,6 @@ void DownloadWindow::onReplyFinished(QNetworkReply *reply){
 
         float sizeMB = obj["size"].toInt();
         sizeMB = sizeMB / 1024 / 1024;
-
-        //adds the languages to tableWidget
 
         int newLine = ui->tableWidget->rowCount();
         ui->tableWidget->insertRow(newLine);

@@ -22,7 +22,6 @@ public:
 
 signals:
     void fetchFinished(QNetworkReply *reply);
-//    void downloadFinished(QNetworkReply *reply);
     void downloadFinished();
     void downloadFailed();
 
@@ -31,7 +30,6 @@ private slots:
     void onDownloadFinished();
 
 private:
-//    void onDownloadFinished(QNetworkReply *reply);
     QNetworkAccessManager qNetManager;
     QNetworkReply *currentReply = nullptr;
     QFile currentFile;

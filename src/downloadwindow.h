@@ -44,6 +44,10 @@ private:
 
     Ui::DownloadWindow *ui;
     NetworkManager netManager;
+
+signals:
+    void downloadFinished();
+
 };
 
 #endif // DOWNLOADWINDOW_H

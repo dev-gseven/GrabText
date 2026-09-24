@@ -29,11 +29,10 @@ private slots:
 
     void on_comboBox_activated(int index);
 
-    void on_refreshButton_clicked(bool checked);
-
 private:
     void onCaptureFinished();
     void populateComboBox();
+    void onDownloadFinished();
 
     Ui::MainWindow *ui;
     Language language;

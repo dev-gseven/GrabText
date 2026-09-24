@@ -45,14 +45,13 @@ void MainWindow::on_langButton_clicked(bool checked)
 {
     auto *downloadWindow = new DownloadWindow(nullptr);
     downloadWindow->show();
-//    downloadWindow->activateWindow();
-//    downloadWindow->raise();
+
+    connect(downloadWindow, &DownloadWindow::downloadFinished, this, &MainWindow::onDownloadFinished);
 }
 
 void MainWindow::on_comboBox_activated(int index)
 {
     language.setCurrentIndex(index);
-    qDebug() << language.getCurrentLang(language.getCurrentIndex());
 }
 
 void MainWindow::onCaptureFinished()
@@ -62,9 +61,6 @@ void MainWindow::onCaptureFinished()
     raise();
 }
 
-
-void MainWindow::on_refreshButton_clicked(bool checked)
-{
+void MainWindow::onDownloadFinished(){
     populateComboBox();
 }
-
