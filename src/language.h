@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QDirIterator>
 #include <QCoreApplication>
+#include <QStandardPaths>
 
 class Language
 {

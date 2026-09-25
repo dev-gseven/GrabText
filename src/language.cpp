@@ -1,15 +1,10 @@
 #include "language.h"
 
 Language::Language():currentIndex(0),
-
-#ifdef __APPLE__
-    languagePath(QCoreApplication::applicationDirPath() + "/../Resources/languages")
-#else
-    languagePath (QCoreApplication::applicationDirPath() + "/languages")
-#endif
+    languagePath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/languages")
 
 {
-
+    QDir().mkpath(languagePath);
 }
 
 void Language::populateLangsVector(){

@@ -30,15 +30,19 @@ void MainWindow::populateComboBox(){
 
 void MainWindow::on_printButton_clicked(bool checked)
 {
-    hide();
-    QTimer::singleShot(100, this, [this](){
-        auto *overlay = new ScreenshotOverlay(language, this);
-        overlay->show();
+    if(language.getCurrentLenght() == 0){
+        QMessageBox::critical(this, "No Language Found!", "No language was found!");
+    }
+    else{
+        hide();
+        QTimer::singleShot(200, this, [this](){
+            auto *overlay = new ScreenshotOverlay(language, this);
+            overlay->show();
 
-        connect(overlay, &ScreenshotOverlay::captureFinished,
-                this, &MainWindow::onCaptureFinished);
-    });
-
+            connect(overlay, &ScreenshotOverlay::captureFinished,
+                    this, &MainWindow::onCaptureFinished);
+        });
+    }
 }
 
 void MainWindow::on_langButton_clicked(bool checked)

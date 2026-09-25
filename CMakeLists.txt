@@ -69,7 +69,7 @@ target_link_libraries(GrabText PRIVATE
 )
 
 set_target_properties(GrabText PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+    MACOSX_BUNDLE_GUI_IDENTIFIER com.gs.${PROJECT_NAME}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
@@ -84,24 +84,4 @@ install(TARGETS GrabText
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(GrabText)
-endif()
-
-if(APPLE)
-    add_custom_command(TARGET GrabText POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory
-            "$<TARGET_BUNDLE_DIR:GrabText>/Contents/Resources/languages"
-
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-            "${CMAKE_SOURCE_DIR}/languages"
-            "$<TARGET_BUNDLE_DIR:GrabText>/Contents/Resources/languages"
-    )
-else()
-    add_custom_command(TARGET GrabText POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory
-            "$<TARGET_FILE_DIR:GrabText>/languages"
-
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-            "${CMAKE_SOURCE_DIR}/languages"
-            "$<TARGET_FILE_DIR:GrabText>/languages"
-    )
 endif()
